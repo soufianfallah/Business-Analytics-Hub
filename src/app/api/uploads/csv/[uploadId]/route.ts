@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { Transform } from "node:stream";
+import { Readable, Transform } from "node:stream";
 
 import {
   DatasetSourceType,
@@ -89,7 +89,7 @@ export async function PUT(
     const bodyStream = request.body
       .pipeThrough(new TransformStream())
       .getReader();
-    const readable = new (await import("node:stream")).Readable({
+    const readable = new Readable({
       async read() {
         const { done, value } = await bodyStream.read();
         if (done) this.push(null);
