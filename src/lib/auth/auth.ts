@@ -79,7 +79,7 @@ export const auth = betterAuth({
   advanced: { database: { generateId: "uuid" } },
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: true,
+    requireEmailVerification: env.EMAIL_DELIVERY_ENABLED,
     minPasswordLength: 8,
     maxPasswordLength: 128,
     resetPasswordTokenExpiresIn: 3600,
@@ -98,7 +98,7 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
-    sendOnSignUp: true,
+    sendOnSignUp: env.EMAIL_DELIVERY_ENABLED,
     autoSignInAfterVerification: true,
     expiresIn: 3600,
     async sendVerificationEmail({ user, url }) {

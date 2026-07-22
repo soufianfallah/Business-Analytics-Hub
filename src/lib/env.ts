@@ -11,6 +11,10 @@ const serverSchema = z.object({
   SMTP_USER: z.string().min(1),
   SMTP_PASSWORD: z.string().min(1),
   EMAIL_FROM: z.string().min(1),
+  EMAIL_DELIVERY_ENABLED: z
+    .enum(["true", "false"])
+    .transform((value) => value === "true")
+    .default("true"),
   UPLOAD_DIR: z.string().min(1).default(".data/uploads"),
   AI_PROVIDER: z
     .enum(["ollama", "mock", "openai", "gemini", "anthropic", "azure-openai"])
