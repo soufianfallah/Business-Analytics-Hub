@@ -24,7 +24,7 @@ import { requireOrganizationPermission } from "@/features/organizations/server/a
 import { prisma } from "@/lib/db/prisma";
 
 export const runtime = "nodejs";
-export const maxDuration = 900;
+export const maxDuration = 300;
 
 export async function PUT(
   request: NextRequest,
