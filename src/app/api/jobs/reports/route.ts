@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateReport } from "@/features/reports/application/generate-report";
 import { prisma } from "@/lib/db/prisma";
 
-export async function POST(request: NextRequest) {
+async function runScheduledReports(request: NextRequest) {
   if (
     !process.env.CRON_SECRET ||
     request.headers.get("authorization") !== `Bearer ${process.env.CRON_SECRET}`
@@ -38,6 +38,10 @@ export async function POST(request: NextRequest) {
   }
   return NextResponse.json({ processed: results.length, results });
 }
+
+export const GET = runScheduledReports;
+export const POST = runScheduledReports;
+
 function advance(from: Date, cron: string) {
   const next = new Date(Math.max(from.getTime(), Date.now()));
   if (cron === "0 8 * * *") next.setUTCDate(next.getUTCDate() + 1);
